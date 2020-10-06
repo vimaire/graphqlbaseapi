@@ -8,6 +8,12 @@
     <PackageReference Include="HotChocolate.AspNetCore" Version="10.5.3" />
     <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.5.3" />
     <PackageReference Include="HotChocolate.AspNetCore.Voyager" Version="10.5.3" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Commands\Commands.csproj" />
+    <ProjectReference Include="..\Queries\Queries.csproj" />
   </ItemGroup>
 
 </Project>
