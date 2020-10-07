@@ -11,6 +11,8 @@
     <PackageReference Include="HotChocolate.AspNetCore" Version="10.5.3" />
     <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.5.3" />
     <PackageReference Include="HotChocolate.AspNetCore.Voyager" Version="10.5.3" />
+    <PackageReference Include="HotChocolate.Types.Filters" Version="10.5.3" />
+    <PackageReference Include="HotChocolate.Types.Sorting" Version="10.5.3" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="NHibernate" Version="5.3.3" />
     <PackageReference Include="NHibernateProfiler.Appender" Version="5.0.5048" />

@@ -7,6 +7,8 @@ using HibernatingRhinos.Profiler.Appender.NHibernate;
 using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Voyager;
+using HotChocolate.Types;
+using HotChocolate.Types.Relay;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +27,13 @@ namespace Api
             services.AddMediatR(typeof(CreateTodoCommand).Assembly, typeof(GetTodosQuery).Assembly);
             services.AddGraphQL(
                 SchemaBuilder.New()
-                    .AddQueryType<Graphql.Queries>()
+                    .AddQueryType<Graphql.Queries>(cfg =>
+                    {
+                        cfg.Field(x => x.Todos(default))
+                            .UseFiltering()
+                            .UseSorting()
+                            .UsePaging<ObjectType<GetTodosQuery.Todo>>();
+                    })
                     .AddMutationType<RootMutation>()
             );
             services.AddSingleton<TodosMutation>();
