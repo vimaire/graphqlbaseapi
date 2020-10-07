@@ -1,7 +1,8 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Domain;
 using MediatR;
+using NHibernate;
 
 namespace Commands
 {
@@ -21,9 +22,19 @@ namespace Commands
 
     public class CreateTodoCommandHandler : IRequestHandler<CreateTodoCommand>
     {
-        public Task<Unit> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
+        private readonly ISessionFactory _sessionFactory;
+
+        public CreateTodoCommandHandler(ISessionFactory sessionFactory)
         {
-            throw new NotImplementedException();
+            _sessionFactory = sessionFactory;
+        }
+
+        public async Task<Unit> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
+        {
+            var session = _sessionFactory.GetCurrentSession();
+            var todo = new Todo(request.Data.Task);
+            await session.SaveAsync(todo, cancellationToken);
+            return Unit.Value;
         }
     }
 }

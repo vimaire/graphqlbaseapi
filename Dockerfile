@@ -10,6 +10,7 @@ WORKDIR /source
 # copy csproj and restore as distinct layers
 COPY *.sln .
 COPY src/Migrations/*.csproj ./src/Migrations/
+COPY src/Domain/*.csproj ./src/Domain/
 COPY src/Queries/*.csproj ./src/Queries/
 COPY src/Commands/*.csproj ./src/Commands/
 COPY src/Api/*.csproj ./src/Api/

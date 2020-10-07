@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain;
 using MediatR;
+using NHibernate;
 
 namespace Queries
 {
@@ -19,9 +20,24 @@ namespace Queries
 
     public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, IQueryable<GetTodosQuery.Todo>>
     {
+        private readonly ISessionFactory _sessionFactory;
+
+        public GetTodosQueryHandler(ISessionFactory sessionFactory)
+        {
+            _sessionFactory = sessionFactory;
+        }
+
         public Task<IQueryable<GetTodosQuery.Todo>> Handle(GetTodosQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var session = _sessionFactory.GetCurrentSession();
+            var queryable = session.Query<Todo>().Select(x => new GetTodosQuery.Todo
+            {
+                Id = x.Id,
+                Task = x.Task,
+                IsCompleted = x.IsCompleted
+            });
+
+            return Task.FromResult(queryable);
         }
     }
 }

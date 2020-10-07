@@ -1,20 +1,23 @@
+using System.Threading.Tasks;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Oakton.AspNetCore;
-[assembly: Oakton.OaktonCommandAssembly]
 
+[assembly: Oakton.OaktonCommandAssembly]
 namespace Api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static Task<int> Main(string[] args)
         {
-            CreateHostBuilder(args)
+            return CreateHostBuilder(args)
                 .RunOaktonCommands(args);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
