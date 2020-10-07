@@ -1,0 +1,19 @@
+version: "3"
+services: 
+  webapp:
+    build: .
+    ports: 
+    - 8000:80
+    env_file: webapp.env
+    networks:
+      - internal
+  database:
+    image: postgres:13.0-alpine
+    ports: 
+    - 5432:5432
+    env_file: database.env
+    networks:
+      - internal
+
+networks:
+  internal: 
